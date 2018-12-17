@@ -1,0 +1,16 @@
+body {
+    font-family: 'DejaVu Sans', Arial, Helvetica, sans-serif;
+}
+
+#wrapper {
+    margin: -8px;
+    text-align: center;
+}
+
+#banner {
+    display: inline-block;
+    font-size: 2em;
+    font-weight: bold;
+    margin: 10px 0;
+    text-transform: uppercase;
+}
