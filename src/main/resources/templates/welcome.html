@@ -1,11 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Magic application</title>
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
+<div id="wrapper" th:if="${label}" th:style="'background-color: ' + ${color}">
+    <div id="banner" th:if="${label}" th:text="${label}"></div>
+</div>
 <h1>Welcome to the Magic application</h1>
 <p>Welcome indeed to the the Magic application, that does nothing but demoes how to apply configuration management.</p>
 <p>That wouldn't be so fun if the screen was empty, so here's some dummy content.</p>

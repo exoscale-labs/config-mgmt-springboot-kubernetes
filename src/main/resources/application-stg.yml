@@ -1,0 +1,4 @@
+app:
+  env:
+    label: Staging
+    color: orange
