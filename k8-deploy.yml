@@ -16,8 +16,14 @@ spec:
     spec:
       containers:
       - name: config-mgmt
-        image: nfrankel/configmgmt:0.0.1-SNAPSHOT
-        args: ["--spring.profiles.active=dev"]
+        image: nfrankel/configmgmt:0.0.2-SNAPSHOT
+        command:
+          - "java"
+          - "-Dapp.env.label=Pre-production"
+          - "-Dapp.env.color=purple"
+          - "-cp"
+          - "/app/resources:/app/classes:/app/libs/*"
+          - "com.exoscale.configmgmt.demo.DemoApplication"
         ports:
         - containerPort: 8080
 ---
