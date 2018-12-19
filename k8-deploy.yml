@@ -17,13 +17,20 @@ spec:
       containers:
       - name: config-mgmt
         image: nfrankel/configmgmt:0.0.2-SNAPSHOT
-        env:
-        - name: app.env.label
-          value: Training
-        - name: app.env.color
-          value: blue
+        envFrom:
+        - configMapRef:
+            name: banner-config-preprod
         ports:
         - containerPort: 8080
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: banner-config-preprod
+  namespace: default
+data:
+  app.env.label: Pre-production
+  app.env.color: purple
 ---
 apiVersion: v1
 kind: Service
