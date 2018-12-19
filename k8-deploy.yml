@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: config-mgmt-deploy
+  labels:
+    app: config-mgmt
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: config-mgmt
+  template:
+    metadata:
+      labels:
+        app: config-mgmt
+    spec:
+      containers:
+      - name: config-mgmt
+        image: nfrankel/configmgmt:0.0.1-SNAPSHOT
+        ports:
+        - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: config-mgmt-service
+spec:
+  selector:
+    app: config-mgmt
+  ports:
+  - port: 8080
+    nodePort: 30001
+  type: NodePort
