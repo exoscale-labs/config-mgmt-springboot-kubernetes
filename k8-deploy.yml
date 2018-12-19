@@ -17,13 +17,11 @@ spec:
       containers:
       - name: config-mgmt
         image: nfrankel/configmgmt:0.0.2-SNAPSHOT
-        command:
-          - "java"
-          - "-Dapp.env.label=Pre-production"
-          - "-Dapp.env.color=purple"
-          - "-cp"
-          - "/app/resources:/app/classes:/app/libs/*"
-          - "com.exoscale.configmgmt.demo.DemoApplication"
+        env:
+        - name: app.env.label
+          value: Training
+        - name: app.env.color
+          value: blue
         ports:
         - containerPort: 8080
 ---
