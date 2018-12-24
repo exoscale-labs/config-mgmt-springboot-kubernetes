@@ -27,13 +27,25 @@ spec:
       - name: git-clone
         image: alpine/git:1.0.4
         command: ['/bin/sh', '-c']
-        args: ['git clone --branch v1.0.0 https://github.com/exoscale-labs/config-mgmt-properties.git && mv config-mgmt-properties/dev/* /config']
+        args: ['git clone --branch $(props.version) https://github.com/exoscale-labs/config-mgmt-properties.git && mv config-mgmt-properties/$(props.env)/* /config']
         volumeMounts:
         - name: config
           mountPath: /config
+        envFrom:
+          - configMapRef:
+              name: clone-props
       volumes:
       - name: config
         emptyDir: {}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: clone-props
+  namespace: default
+data:
+  props.version: v1.0.0
+  props.env: stg
 ---
 apiVersion: v1
 kind: Service
