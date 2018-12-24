@@ -17,6 +17,7 @@ spec:
       containers:
       - name: config-mgmt
         image: nfrankel/configmgmt:0.0.1-SNAPSHOT
+        args: ["--spring.profiles.active=dev"]
         ports:
         - containerPort: 8080
 ---
