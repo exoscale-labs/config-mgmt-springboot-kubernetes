@@ -17,20 +17,23 @@ spec:
       containers:
       - name: config-mgmt
         image: nfrankel/configmgmt:0.0.2-SNAPSHOT
-        envFrom:
-        - configMapRef:
-            name: banner-config-preprod
+        volumeMounts:
+        - name: config
+          mountPath: /config
+          readOnly: true
         ports:
-        - containerPort: 8080
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: banner-config-preprod
-  namespace: default
-data:
-  app.env.label: Pre-production
-  app.env.color: purple
+          - containerPort: 8080
+      initContainers:
+      - name: git-clone
+        image: alpine/git:1.0.4
+        command: ['/bin/sh', '-c']
+        args: ['git clone --branch v1.0.0 https://github.com/exoscale-labs/config-mgmt-properties.git && mv config-mgmt-properties/dev/* /config']
+        volumeMounts:
+        - name: config
+          mountPath: /config
+      volumes:
+      - name: config
+        emptyDir: {}
 ---
 apiVersion: v1
 kind: Service
