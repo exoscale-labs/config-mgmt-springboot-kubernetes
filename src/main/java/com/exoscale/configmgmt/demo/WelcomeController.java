@@ -1,5 +1,6 @@
 package com.exoscale.configmgmt.demo;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,16 +9,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class WelcomeController {
 
-    private final Environment env;
+    @Value("${app.env.label}")
+    private String label;
 
-    public WelcomeController(Environment env) {
-        this.env = env;
-    }
+    @Value("${app.env.color}")
+    private String color;
 
     @GetMapping("/")
     public String welcome(Model model) {
-        model.addAttribute("label", env.getProperty("app.env.label"));
-        model.addAttribute("color", env.getProperty("app.env.color"));
+        model.addAttribute("label", label);
+        model.addAttribute("color", color);
         return "welcome";
     }
 }
