@@ -28,6 +28,7 @@ spec:
   containers:
     - name: config-mgmt
       image: configmgmt:1.0.0
+      args: ["--spring.profiles.active=stg"]
       imagePullPolicy: Never
       ports:
         - containerPort: 8080
