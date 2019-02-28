@@ -28,11 +28,18 @@ spec:
   containers:
     - name: config-mgmt
       image: configmgmt:1.0.0
-      env:
-        - name: app.env.label
-          value: Staging
-        - name: app.env.color
-          value: orange
+      envFrom:
+        - configMapRef:
+            name: banner-config-stg
       imagePullPolicy: Never
       ports:
         - containerPort: 8080
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: banner-config-stg
+  namespace: cfgmgmt
+data:
+  app.env.label: Staging
+  app.env.color: orange
