@@ -28,13 +28,11 @@ spec:
   containers:
     - name: config-mgmt
       image: configmgmt:1.0.0
-      command:
-        - "java"
-        - "-Dapp.env.label=Pre-production"
-        - "-Dapp.env.color=purple"
-        - "-cp"
-        - "/app/resources:/app/classes:/app/libs/*"
-        - "com.exoscale.configmgmt.demo.DemoApplication"
+      env:
+        - name: app.env.label
+          value: Staging
+        - name: app.env.color
+          value: orange
       imagePullPolicy: Never
       ports:
         - containerPort: 8080
