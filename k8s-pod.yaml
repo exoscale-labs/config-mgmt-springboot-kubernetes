@@ -28,18 +28,21 @@ spec:
   containers:
     - name: config-mgmt
       image: configmgmt:1.0.0
-      envFrom:
-        - configMapRef:
-            name: banner-config-stg
       imagePullPolicy: Never
       ports:
         - containerPort: 8080
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: banner-config-stg
-  namespace: cfgmgmt
-data:
-  app.env.label: Staging
-  app.env.color: orange
+      volumeMounts:
+        - name: config
+          mountPath: /config
+          readOnly: true
+  initContainers:
+    - name: git-clone
+      image: alpine/git:1.0.4
+      command: ['/bin/sh', '-c']
+      args: ['git clone --branch v1.0.0 https://github.com/exoscale-labs/config-mgmt-properties.git && mv config-mgmt-properties/dev/* /config']
+      volumeMounts:
+        - name: config
+          mountPath: /config
+  volumes:
+    - name: config
+      emptyDir: {}
